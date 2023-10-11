@@ -1,0 +1,11 @@
+------------------------------------------------------------------------------------------------------------------------------------------------- --------------------------------------------
+ Exploit Title                                                                                                                                   |  URL
+------------------------------------------------------------------------------------------------------------------------------------------------- --------------------------------------------
+Microsoft Windows - 'NetAPI32.dll' Code Execution (Python) (MS08-067)                                                                            | https://www.exploit-db.com/exploits/40279
+Microsoft Windows Server - Code Execution (MS08-067)                                                                                             | https://www.exploit-db.com/exploits/7104
+Microsoft Windows Server - Code Execution (PoC) (MS08-067)                                                                                       | https://www.exploit-db.com/exploits/6824
+Microsoft Windows Server - Service Relative Path Stack Corruption (MS08-067) (Metasploit)                                                        | https://www.exploit-db.com/exploits/16362
+Microsoft Windows Server - Universal Code Execution (MS08-067)                                                                                   | https://www.exploit-db.com/exploits/6841
+Microsoft Windows Server 2000/2003 - Code Execution (MS08-067)                                                                                   | https://www.exploit-db.com/exploits/7132
+------------------------------------------------------------------------------------------------------------------------------------------------- --------------------------------------------
+Shellcodes: No Results

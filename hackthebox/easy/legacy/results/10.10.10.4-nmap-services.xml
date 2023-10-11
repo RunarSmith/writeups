@@ -1,0 +1,36 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE nmaprun>
+<?xml-stylesheet href="file:///usr/bin/../share/nmap/nmap.xsl" type="text/xsl"?>
+<!-- Nmap 7.92 scan initiated Sat Apr  9 22:32:51 2022 as: nmap -sT -sV -sC -A -Pn -p 139,445 -oN 10.10.10.4-nmap-services.txt -oX 10.10.10.4-nmap-services.xml 10.10.10.4 -->
+<nmaprun scanner="nmap" args="nmap -sT -sV -sC -A -Pn -p 139,445 -oN 10.10.10.4-nmap-services.txt -oX 10.10.10.4-nmap-services.xml 10.10.10.4" start="1649536371" startstr="Sat Apr  9 22:32:51 2022" version="7.92" xmloutputversion="1.05">
+<scaninfo type="connect" protocol="tcp" numservices="2" services="139,445"/>
+<verbose level="0"/>
+<debugging level="0"/>
+<host starttime="1649536371" endtime="1649536417"><status state="up" reason="user-set" reason_ttl="0"/>
+<address addr="10.10.10.4" addrtype="ipv4"/>
+<hostnames>
+</hostnames>
+<ports><port protocol="tcp" portid="139"><state state="open" reason="syn-ack" reason_ttl="0"/><service name="netbios-ssn" product="Microsoft Windows netbios-ssn" ostype="Windows" method="probed" conf="10"><cpe>cpe:/o:microsoft:windows</cpe></service></port>
+<port protocol="tcp" portid="445"><state state="open" reason="syn-ack" reason_ttl="0"/><service name="microsoft-ds" product="Windows XP microsoft-ds" ostype="Windows XP" method="probed" conf="10"><cpe>cpe:/o:microsoft:windows_xp</cpe></service></port>
+</ports>
+<hostscript><script id="clock-skew" output="mean: 5d00h27m39s, deviation: 2h07m16s, median: 4d22h57m39s"><elem key="median">428259</elem>
+<elem key="mean">433659</elem>
+<elem key="count">2</elem>
+<elem key="stddev">7636</elem>
+</script><script id="smb2-time" output="Protocol negotiation failed (SMB2)"/><script id="nbstat" output="NetBIOS name: LEGACY, NetBIOS user: &lt;unknown&gt;, NetBIOS MAC: 00:50:56:b9:c9:0a (VMware)"/><script id="smb-security-mode" output="&#xa;  account_used: guest&#xa;  authentication_level: user&#xa;  challenge_response: supported&#xa;  message_signing: disabled (dangerous, but default)"><elem key="account_used">guest</elem>
+<elem key="authentication_level">user</elem>
+<elem key="challenge_response">supported</elem>
+<elem key="message_signing">disabled</elem>
+</script><script id="smb-os-discovery" output="&#xa;  OS: Windows XP (Windows 2000 LAN Manager)&#xa;  OS CPE: cpe:/o:microsoft:windows_xp::-&#xa;  Computer name: legacy&#xa;  NetBIOS computer name: LEGACY\x00&#xa;  Workgroup: HTB\x00&#xa;  System time: 2022-04-15T01:30:37+03:00&#xa;"><elem key="os">Windows 5.1</elem>
+<elem key="lanmanager">Windows 2000 LAN Manager</elem>
+<elem key="server">LEGACY\x00</elem>
+<elem key="date">2022-04-15T01:30:37+03:00</elem>
+<elem key="fqdn">legacy</elem>
+<elem key="domain_dns">legacy</elem>
+<elem key="workgroup">HTB\x00</elem>
+<elem key="cpe">cpe:/o:microsoft:windows_xp::-</elem>
+</script></hostscript><times srtt="22366" rttvar="16808" to="100000"/>
+</host>
+<runstats><finished time="1649536417" timestr="Sat Apr  9 22:33:37 2022" summary="Nmap done at Sat Apr  9 22:33:37 2022; 1 IP address (1 host up) scanned in 46.72 seconds" elapsed="46.72" exit="success"/><hosts up="1" down="0" total="1"/>
+</runstats>
+</nmaprun>
