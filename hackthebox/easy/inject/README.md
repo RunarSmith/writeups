@@ -68,19 +68,19 @@ HOP RTT      ADDRESS
 
 Using a web browser, explore the web application at [http://\$TARGET:8080](http://$TARGET:8080)
 
-![Web Homepage](hackthebox/easy/inject/web_home.png)
+![Web Homepage](assets/web_home.png)
 
 And there is a link to an upload form :
 
-![Web Homepage](web_upload_form.png)
+![Web Homepage](assets/web_upload_form.png)
 
 When uploading a random file (ex:`file.php`), the file is refused:
 
-![Web Homepage](web_upload_form_not_image.png)
+![Web Homepage](assets/web_upload_form_not_image.png)
 
 When uploading an image (ex:`file.jpg`), the file is accepted:
 
-![Web Homepage](web_upload_form_success.png)
+![Web Homepage](assets/web_upload_form_success.png)
 
 There is a filter on the upload form, on the extension, or mimetype, or something.
 

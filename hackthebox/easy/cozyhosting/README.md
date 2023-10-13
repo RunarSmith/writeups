@@ -101,7 +101,7 @@ There is a /admin page, redirecting to a login page :
 
 We can notice the cookie value :
 
-![[assets/cookie.png]]
+![](assets/cookie.png)
 
 The cookie value is the one given from the sessions actuator !
 
