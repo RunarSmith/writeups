@@ -382,7 +382,7 @@ There is 1 repository :
 
 There are 2 users :
 
-![](writeups/hackthebox/easy/busqueda/gitea_users.png)
+![](assets/gitea_users.png)
 
 There is an account named "administrator", and he seems to have activity on this gitea.
 
