@@ -66,9 +66,9 @@ echo "$TARGET    searcher.htb" >> /etc/hosts
 
 firefox http://searcher.htb/ &
 
-![](searcher_home_1.png)
+![](assets/searcher_home_1.png)
 
-![](searcher_home_2.png)
+![](assets/searcher_home_2.png)
 
 We note here the application and its version : Searchor 2.4.0
 
@@ -368,7 +368,7 @@ echo "$TARGET    gitea.searcher.htb" >> /etc/hosts
 
 firefox http://gitea.searcher.htb/ &
 
-![](gitea.png)
+![](assets/gitea.png)
 
 signin with cody user :
 
@@ -378,7 +378,7 @@ signin with cody user :
 
 There is 1 repository :
 
-![](gitea_repos.png)
+![](assets/gitea_repos.png)
 
 There are 2 users :
 
@@ -394,7 +394,7 @@ credentials :
 | ---       | ---       | ---       | ---       |
 | administrator | yuiu1hoiu4i5ho1uh |           | gitea |
 
-![](gitea_admin.png)
+![](assets/gitea_admin.png)
 
 There is a new repository available : administrator / scripts
 
