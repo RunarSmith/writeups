@@ -166,7 +166,7 @@ There are some interesting folders :
 
 Now let's browse this web site : [http://10.10.11.229/](http://10.10.11.229/)
 
-![Untitled](hackthebox/medium/zipping/assets/web_home.png)
+![Untitled](./assets/web_home.png)
 
 When scrolling at the bottom of the page :
 
