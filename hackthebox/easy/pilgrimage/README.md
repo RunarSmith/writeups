@@ -66,7 +66,7 @@ echo "$TARGET   pilgrimage.htb" >> /etc/hosts
 
 ### Web
 
-![[Pasted image 20230719224003.png]]
+![](assets/web_home.png)
 
 ```shell
 gobuster dir -w /opt/seclists/Discovery/Web-Content/directory-list-2.3-medium.txt -u http://pilgrimage.htb/
@@ -178,7 +178,7 @@ From `index.php` file, we can get some interesting information
 
 On the welcome page, we can upload a photo or image file :
 
-![[Pasted image 20230719223929.png]]
+![](assets/upload_form.png)
 
 On upload, the file is uploaded in folder `/var/www/pilgrimage.htb/tmp` :
 
@@ -251,7 +251,7 @@ cargo run "/etc/passwd"
 
 This produce a file `image.png` that we can upload :
 
-![[Pasted image 20230720193907.png]]
+![](assets/upload_ok.png)
 
 The resulting image is a red box, but we can download it 
 

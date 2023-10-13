@@ -67,7 +67,7 @@ open via a web browser :
 firefox http://$TARGET &
 ```
 
-![](cacti_login.png)
+![](assets/cacti_login.png)
 
 This is a cacti version 1.2.22
 
