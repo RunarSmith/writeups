@@ -103,11 +103,11 @@ http://10.10.10.198:8080 [200 OK] Apache[2.4.43], Bootstrap, Cookies[sec_session
 firefox http://$TARGET:8080 &
 ```
 
-![[./assets/buf_home.png]]
+![](./assets/buf_home.png)
 
 In the contact page :
 
-![[assets/buf_contact.png]]
+![](assets/buf_contact.png)
 
 The software used is "Gym Management Software 1.0"
 ## Initial access
