@@ -107,15 +107,15 @@ The cookie value is the one given from the sessions actuator !
 
 From the web browser, we can alter the cookie value :
 
-![[assets/cooky_update.png]]
+![](assets/cooky_update.png)
 
 and change it for the "kanderson" session. With this change, we are now able to enter the admin portal at : http://cozyhosting.htb/admin
 
-![[assets/kanderson.png]]
+![](assets/kanderson.png)
 
 There is a form at the end of the page :
 
-![[assets/form.png]]
+![](assets/form.png)
 
 The note :
 
@@ -132,7 +132,7 @@ We can test this form, and we can notice an error condition :
 
 in burpsuite :
 
-![[assets/error.png]]
+![](assets/error.png)
 
 So this form is used to call ssh system command, and there is a sanitation issue we could use.
 
@@ -349,7 +349,7 @@ Credential found :
 
 We can go further and decompile this java application using `jd-gui`:
 
-![[assets/source.png]]
+![](assets/source.png)
 
 ```java
 package BOOT-INF.classes.htb.cloudhosting.scheduled;
