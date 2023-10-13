@@ -94,25 +94,25 @@ echo "$TARGET        microblog.htb app.microblog.htb" >> /etc/hosts
 
 [http://app.microblog.htb/](http://app.microblog.htb/)
 
-![Untitled](app_welcome.png)
+![Untitled](assets/app_welcome.png)
 
 There is a login page:
 
-![Untitled](app_login.png)
+![Untitled](assets/app_login.png)
 
 and a register page:
 
-![Untitled](app_register.png)
+![Untitled](assets/app_register.png)
 
 Now browse to : [http://microblog.htb:3000/](http://microblog.htb:3000/)
 
-![Untitled](gitea_welcome.png)
+![Untitled](assets/gitea_welcome.png)
 
 This is a gitea instance (source code hosting service).
 
 Let's explore repositories:
 
-![Untitled](gitea_projects.png)
+![Untitled](assets/gitea_projects.png)
 
 We can list users:
 
@@ -124,17 +124,17 @@ This user have a single project: **microblog**
 
 [http://microblog.htb:3000/cooper/microblog](http://microblog.htb:3000/cooper/microblog)
 
-![Untitled](gitea_cooper_microblog.png)
+![Untitled](assets/gitea_cooper_microblog.png)
 
 From what we already discovered on the previous web app on port 80, its source code seems to be hosted here :
 
 [http://microblog.htb:3000/cooper/microblog/src/branch/main/microblog/app](http://microblog.htb:3000/cooper/microblog/src/branch/main/microblog/app)
 
-![Untitled](gitea_microblog.png)
+![Untitled](assets/gitea_microblog.png)
 
 We can continue to explore this repo, one level up :
 
-![Untitled](gitea_apps_names.png)
+![Untitled](assets/gitea_apps_names.png)
 
 This is what could be the **app** subdomain, with another one **sunny**. Let's add its definition and access it :
 
@@ -144,7 +144,7 @@ echo "$TARGET        microblog.htb app.microblog.htb sunny.microblog.htb" >> /et
 
 [http://sunny.microblog.htb/](http://sunny.microblog.htb/)
 
-![Untitled](sunny.png)
+![Untitled](assets/sunny.png)
 
 ### Create a blog
 
@@ -152,7 +152,7 @@ Let's create a blog ! For this, we first need to register.
 
 [http://app.microblog.htb/register/](http://app.microblog.htb/register/)
 
-![Untitled](register.png)
+![Untitled](assets/register.png)
 
 We come to a dashboard :
 
@@ -160,11 +160,11 @@ We come to a dashboard :
 
 We can create a new blog (let's call it **john**) :
 
-![Untitled](new_blog.png)
+![Untitled](assets/new_blog.png)
 
 The new blog is online:
 
-![Untitled](new_blog_created.png)
+![Untitled](assets/new_blog_created.png)
 
 We have to add that new host again :
 
@@ -174,16 +174,16 @@ echo "$TARGET microblog.htb app.microblog.htb sunny.microblog.htb john.microblog
 
 We can now access and edit it:
 
-![Untitled](edit_blog.png)
+![Untitled](assets/edit_blog.png)
 
 We can add a title and some text :
 
-![Untitled](add_text_header.png)
+![Untitled](assets/add_text_header.png)
 ### Analyse the requests
 
 Using Burpsuite, we can analyse the POST requests for adding text :
 
-![Untitled](burpsuite_add_text.png)
+![Untitled](assets/burpsuite_add_text.png)
 
 We have 2 parameters : **id** and **txt** here
 
@@ -237,11 +237,11 @@ We can use burpsuite repeater in order to replay a request with a text file to r
 
 `id=../../../../../../../../etc/passwd&txt=test`
 
-![Untitled](burpsuite_test_add_text_file.png)
+![Untitled](assets/burpsuite_test_add_text_file.png)
 
 When reloading the page :
 
-![Untitled](burpsuite_test_add_text_file_success.png)
+![Untitled](assets/burpsuite_test_add_text_file_success.png)
 
 We are able to read a remote file (`/etc/passwd`) :
 
@@ -472,7 +472,7 @@ HSET /static/unix:%2fvar%2frun%2fredis%2fredis.sock:john%20pro%20true%20/fakeuri
 Host: microblog.htb
 ```
 
-![Untitled](pro_flag_set.png)
+![Untitled](assets/pro_flag_set.png)
 
 In a simpler way, we can execute in directly in the console :
 
@@ -486,7 +486,7 @@ Since we use nginX to access redis, this is not linked to the application, and w
 
 With this new option, we are able to send an image :
 
-![Untitled](pro_upload_image.png)
+![Untitled](assets/pro_upload_image.png)
 
 The application code to add an image :
 
@@ -846,7 +846,7 @@ Now, we can run `/usr/bin/license` to provision a license key for the new user w
 sudo /usr/bin/license -p "john"
 ```
 
-![Untitled](license.png)
+![Untitled](assets/license.png)
 
 The licence key :
 
