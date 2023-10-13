@@ -174,7 +174,7 @@ We can now access the web site :
 firefox http://$TARGET
 ```
 
-![](web_home.png)
+![](hackthebox/easy/soccer/web_home.png)
 
 We can enumerate this site :
 

