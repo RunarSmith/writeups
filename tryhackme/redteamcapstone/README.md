@@ -197,13 +197,13 @@ Am0
 
 ## Writeup
 
-[[breaching_perimeter]]
+1. [Breaching the perimeter](breaching_perimeter.md)
+2. [Domain corp](domain-corp.md)
+3. [Forest root](forest-root.md)
+4. [Domain bank](domain-bank)
+5. [SWIFT System](swift.md)
 
-[[domain-corp]]
+## Other items
 
-[[forest-root]]
-
-[[domain-bank]]
-
-[[swift]]
-
+* [setup](setup.md)
+* [Users](users.md)
