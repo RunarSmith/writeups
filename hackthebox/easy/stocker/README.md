@@ -90,7 +90,7 @@ We can browse this web application with a browser :
 firefox http://stocker.htb &
 ```
 
-![](web.png)
+![](assets/web.png)
 
 We can notice a possible user in this page :
 
@@ -134,7 +134,7 @@ echo "$TARGET    dev.stocker.htb" >> /etc/hosts
 
 and we can open this address `http://dev.stocker.htb` in a web browser :
 
-![](web-dev.png)
+![](assets/web-dev.png)
 
 This is login page.
 
@@ -211,7 +211,7 @@ Set-Cookie: connect.sid=s%3AZdrJlJpicX2Mrkg4F7jJhKBi3RwWw8Tx.j30Hrk7PbNy7eZo%2F3
 
 This redirect to [http://dev.stocker.htb/stock](http://dev.stocker.htb/stock) :
 
-![](web_dev_stock.png)
+![](assets/web_dev_stock.png)
 
 Analysing the application behaviour, there are a few steps until to get a bill as a pdf file:
 
@@ -247,7 +247,7 @@ While analysing how this application run, it appears that the "title" field send
 
 For example, changing the title from "Axe" to "My Powed axe" will be reported in the PDF:
 
-![](web_altered_order.png)
+![](assets/web_altered_order.png)
 
 We can also analyse this PDF to get some meta data :
 
@@ -340,7 +340,7 @@ curl -q http://dev.stocker.htb/api/po/$OrderId -o bill.pdf
 
 we have a result :
 
-![](web_altered_order_passwd.png)
+![](assets/web_altered_order_passwd.png)
 
 The exploit is working, we can get information on the server, but we can't have all the file. We can try to have a wider frame to get it all:
 
@@ -492,7 +492,7 @@ This last one will get a source code :
 Payload='<iframe src=file:///var/www/dev/index.js height=1050px width=1200px></iframe>'
 ```
 
-![](web-dev-code.png)
+![](assets/web-dev-code.png)
 
 ```js
 const express = require("express");

@@ -85,7 +85,7 @@ echo "$TARGET    precious.htb" >> /etc/hosts
 
 Now, firefox can display the web page :
 
-[[web.png]]
+![](assets/web.png)
 
 This page request an URL and print it as a PDF file.
 
@@ -113,7 +113,9 @@ Let's provide a basic HTML file `test.html`:
 
 In ther form, provide the URL to get the page : `http://10.10.14.13:8000/test.html`
 
-The result is a PDF file : [[pdf.png]]
+The result is a PDF file : 
+
+![](assets/pdf.png)
 
 We can save this PDF file, and give a quick analyse :
 

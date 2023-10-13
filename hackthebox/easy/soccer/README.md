@@ -174,7 +174,7 @@ We can now access the web site :
 firefox http://$TARGET
 ```
 
-![](hackthebox/easy/soccer/web_home.png)
+![](assets/web_home.png)
 
 We can enumerate this site :
 
@@ -204,7 +204,7 @@ by OJ Reeves (@TheColonial) & Christian Mehlmauer (@firefart)
 
 There is login page :
 
-![](web_tiny.png)
+![](assets/web_tiny.png)
 
 This is Tiny File Manager
 
@@ -230,11 +230,11 @@ Services :
 
 Using this default credential int the Tiny File Manager login page allow the access :
 
-![](web_tiny_2.png)
+![](assets/web_tiny_2.png)
 
 From this interface, it's possible to upload files :
 
-![](web_tiny_3.png)
+![](assets/web_tiny_3.png)
 
 Tiny File Manager is a PHP tool, so we can upload a PHP reverse shell.
 
@@ -399,19 +399,19 @@ firefox http://soc-player.soccer.htb
 
 Home :
 
-![](soc-player-home.png)
+![](assets/soc-player-home.png)
 
 Match :
 
-![](soc-player-match.png)
+![](assets/soc-player-match.png)
 
 Login :
 
-![](soc-player-login.png)
+![](assets/soc-player-login.png)
 
 Signup :
 
-![](soc-player-signup.png)
+![](assets/soc-player-signup.png)
 
 We can signup with :
 
@@ -424,11 +424,11 @@ And then login with :
 - email: john@doe.com
 - Password: Password123
 
-![](soc-player-logged-in.png)
+![](assets/soc-player-logged-in.png)
 
 When using this field, we can notice this is using a websocket to query information:
 
-![](soc-player-websocket.png)
+![](assets/soc-player-websocket.png)
 
 This is requesting throw the field `id`. The code for this is in the web page :
 

