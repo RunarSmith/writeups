@@ -170,13 +170,13 @@ Now let's browse this web site : [http://10.10.11.229/](http://10.10.11.229/)
 
 When scrolling at the bottom of the page :
 
-![Untitled](zipping_contact.png)
+![Untitled](./assets/zipping_contact.png)
 
 There is also a page “Work with us” :
 
 [http://10.10.11.229/upload.php](http://10.10.11.229/upload.php)
 
-![Untitled](zipping_upload.png)
+![Untitled](./assets/zipping_upload.png)
 
 This form is aimed at uploading a CV :
 
@@ -195,7 +195,7 @@ zip cv.zip header.jpg.pdf
 
 Then upload cv.zip
 
-![Untitled](zipping_upload_ok.png)
+![Untitled](./assets/zipping_upload_ok.png)
 
 The link provided : 
 [http://10.10.11.229/uploads/3d395417744dd37f4b63c93a27265ea8/header.jpg.pdf](http://10.10.11.229/uploads/3d395417744dd37f4b63c93a27265ea8/header.jpg.pdf)
@@ -838,23 +838,23 @@ python3 ./pdf_archiver.py
 
 Then upload the zip file :
 
-![Untitled](zipping_upload_shell.png)
+![Untitled](./assets/zipping_upload_shell.png)
 
 Using `burpsuite`, repeat the action and intercept POST request :
 
-![Untitled](burpsuite_post.png)
+![Untitled](./assets/burpsuite_post.png)
 
 Switch in Hex mode :
 
-![Untitled](burpsuite_post_hex.png)
+![Untitled](./assets/burpsuite_post_hex.png)
 
 Replace the ‘A’ by ‘00’ in order to introduce a null byt in that filename
 
-![Untitled](burpsuite_post_hex_null.png)
+![Untitled](./assets/burpsuite_post_hex_null.png)
 
 Then send the request. The zip file must be accepted :
 
-![Untitled](burpsuite_post_reply.png)
+![Untitled](./assets/burpsuite_post_reply.png)
 
 Automate it with a script `upload.sh` :
 
@@ -885,7 +885,7 @@ curl http://${TARGET}/${UploadItem}
 
 [http://10.10.11.229/shop/]((http://10.10.11.229//shop)
 
-![Untitled](shop_home.png)
+![Untitled](./assets/shop_home.png)
 
 We can use the LFI to read the code behind this page, located in the `shop` folder :
 
@@ -1037,13 +1037,13 @@ When selecting a product, we are directed to this page :
 
 [http://10.10.11.229/shop/index.php?page=product&id=3](http://10.10.11.229/shop/index.php?page=product&id=3)
 
-![Untitled](shop_product.png)
+![Untitled](./assets/shop_product.png)
 
 There is also the cart page :
 
 [http://10.10.11.229/shop/index.php?page=cart](http://10.10.11.229/shop/index.php?page=cart)
 
-![Untitled](shop_cart.png)
+![Untitled](./assets/shop_cart.png)
 
 From the URL, this redirect to page `cart.php`, and `product.php`. we can use the LFI again to explore theses files in the `shop` folder :
 
@@ -1298,7 +1298,7 @@ Since this is the mysql user that will write the file, it should not have write 
 
 As a result, when calling, we have a response : "Product does not exist!" :
 
-![Untitled](shop_exploit.png)
+![Untitled](./assets/shop_exploit.png)
 
 We can try to calli the payload :
 
@@ -1356,7 +1356,7 @@ rlwrap -cAr nc -lvnp 9001
 
 When executing, we have a working reverse shell :
 
-![Untitled](user_shell.png)
+![Untitled](./assets/user_shell.png)
 
 ### Maintaining access
 
@@ -1558,7 +1558,7 @@ There are a few compilation warning, but that's OK. We can execute this applicat
 sudo stock
 ```
 
-![Untitled](root_shell.png)
+![Untitled](./assets/root_shell.png)
 
 
 
