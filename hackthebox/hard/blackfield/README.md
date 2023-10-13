@@ -57,7 +57,6 @@ PORT     STATE SERVICE       VERSION
 88/tcp   open  kerberos-sec  Microsoft Windows Kerberos (server time: 2023-04-15 03:11:18Z)
 135/tcp  open  msrpc         Microsoft Windows RPC
 389/tcp  open  ldap          Microsoft Windows Active Directory LDAP (Domain: BLACKFIELD.local0., Site: Default-First-Site-Name)
-445/tcp  open  microsoft-ds?
 593/tcp  open  ncacn_http    Microsoft Windows RPC over HTTP 1.0
 3268/tcp open  ldap          Microsoft Windows Active Directory LDAP (Domain: BLACKFIELD.local0., Site: Default-First-Site-Name)
 5985/tcp open  http          Microsoft HTTPAPI httpd 2.0 (SSDP/UPnP)
@@ -150,7 +149,7 @@ So the share `profiles$` is accessible as read-only.
 smbmap -u guest -H "${TARGET}" -R "profiles\$"
 ```
 
-Result [here](smb_share_profiles.txt)
+Result [here](assets/smb_share_profiles.txt)
 
 This share contains a list (around 300) of supposed home folders, such as :
 
@@ -168,7 +167,7 @@ For later use, we generate usernames from the folder names :
 smbclient -N "\\\\${TARGET}\\profiles\$" -c 'ls' | grep -E '^  [A-Z]*' | cut -d ' ' -f 3 > usernames.txt
 ```
 
-Result [here](usernames.txt)
+Result [here](assets/usernames.txt)
 
 ### Ldap (port 389)
 
@@ -429,11 +428,11 @@ bloodhound
 
 login, then upload the 4 json :
 
-![upload](results/bloodhound-upload.png)
+![upload](assets/bloodhound-upload.png)
 
 open the Analysis menu :
 
-![analysis menu](results/bloodhound-query.png)
+![analysis menu](assets/bloodhound-query.png)
 
 Query : "Find all Domain Admins"
 
@@ -445,13 +444,13 @@ In the analysis menu, select "Find AS-REP Roastable Users (DontReqPreAuth)" in t
 
 The user `support@blackfield.local` appears here. It can be flagged as "owned" (right clic: "mark as owned")
 
-![support user](results/bloodhound-support_user.png)
+![support user](assets/bloodhound-support_user.png)
 
 This user is member of groups :
 
-![](results/bloodhound-user-memberof.png)
+![](assets/bloodhound-user-memberof.png)
 
-![](results/bloodhound-user-memberof-2.png)
+![](assets/bloodhound-user-memberof-2.png)
 
 user "Support@blackfield.local" :
 
@@ -462,9 +461,9 @@ user "Support@blackfield.local" :
   - is a member of "users"
   - is a member of "everyone"
 
-![](results/bloodhound-user-outbound.png)
+![](assets/bloodhound-user-outbound.png)
 
-![](results/bloodhound-user-outbound-2.png)
+![](assets/bloodhound-user-outbound-2.png)
 
 The user "SUPPORT@BLACKFIELD.LOCAL" has the capability to change the user "AUDIT2020@BLACKFIELD.LOCAL"'s password without knowing that user's current password.
 

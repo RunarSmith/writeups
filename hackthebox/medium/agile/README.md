@@ -63,49 +63,49 @@ in /etc/hosts, add this hostname :
 
 browse to http://superpass.htb :
 
-![[Pasted image 20230702215516.png]]
+![](assets/superpass.png)
 
-![[Pasted image 20230702215606.png]]
+![](assets/superpass2.png)
 
 Using button "Get Started" leads to a login page :
 
-![[Pasted image 20230702215855.png]]
+![](assets/login.png)
 
 No default password could be identifyed. 
 
 We can register a new account :
 
-![[Pasted image 20230702224629.png]]
+![](assets/create_vault.png)
 
 - username : `john` 
 - password: `doe`
 
-![[Pasted image 20230702224804.png]]
+![](assets/vault.png)
 
 Then we can add a password in our vault :
 
-![[Pasted image 20230703215021.png]]
+![](assets/create_creds.png)
 
 Then we can export our vault to get a CSV File. we can analyse this with BurpSuite :
 
-![[Pasted image 20230703220220.png]]
+![](assets/request.png)
 
 A call to `/vault/export` will forward to `/download?fn=file.csv`.
 
 We can change the file to download :
 
-![[Pasted image 20230703220900.png]]
+![](assets/request_download_csv.png)
 
 Using a fake file reveal some informations :
 
-![[Pasted image 20230707225332.png]]
-![[Pasted image 20230707225448.png]]
+![](assets/error2.png)
+![](assets/werkzeug.png)
 
 The application is located in directory `/app/app/superpass/` and this is Werkzeug application.
 
 the file is downloaded from `/tmp` folder. We can get `/etc/passwd` :
 
-![[Pasted image 20230703221202.png]]
+![](assets/request_download_exploit.png)
 
 ```text
 root:x:0:0:root:/root:/bin/bash
@@ -155,7 +155,7 @@ When looking at the exception when downloading a non-existing file, the Werkzeug
 
 The access is locked with a PIN code :
 
-![[Pasted image 20230707233128.png]]
+![](assets/lock.png)
 
 This PIN can maybe be broken : https://book.hacktricks.xyz/network-services-pentesting/pentesting-web/werkzeug#pin-protected-path-traversal
 
@@ -377,7 +377,7 @@ When executed, this give th PIN code that is validated by the application:
 
 We can now access the console and access the target host :
 
-![[Pasted image 20230709214337.png]]
+![](assets/console_exec.png)
 
 ```python
 __import__('os').popen('whoami').read();
@@ -824,19 +824,19 @@ ssh -L 41829:localhost:41829 corum@superpass.htb
 
 Then on Chrome, we can add our target to "network targets" :
 
-![[Pasted image 20230712123856.png]]
+![](assets/devices.png)
 
 The target appears :
 
-![[Pasted image 20230712124038.png]]
+![](assets/devices2.png)
 
 clic "inspect" to see the target
 
-![[Pasted image 20230712124130.png]]
+![](assets/test.png)
 
 The session is already open, so we van clic on "Vault" to see its content :
 
-![[Pasted image 20230712124218.png]]
+![](assets/test_creds.png)
 
 We have a few credentials here :
 

@@ -136,9 +136,9 @@ smb: \>
 ```
 
 
-![[Pasted image 20230616154525.png]]
+![](assets/procedure.png)
 
-![[Pasted image 20230616154614.png]]
+![](assets/bonus.png)
 
 PublicUser : GuestUserCantWrite1
 

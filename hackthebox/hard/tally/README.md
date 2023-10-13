@@ -156,7 +156,7 @@ The reported OS is: Windows Server 2008 R2 - 2012
 
 nmap have been redirected to a langing page : http://10.10.10.59/_layouts/15/start.aspx#/default.aspx
 
-![](web_sharepoint.png)
+![](assets/web_sharepoint.png)
 
 From the blue icon, this seems to be a Sharepoint instance.
 
@@ -317,11 +317,11 @@ There are a few pages that returned a HTTP 200 codes :
 
 most of these pages are not interesting :
 
-![](web_sharepoint_enum_not.png)
+![](assets/web_sharepoint_enum_not.png)
 
 The last URL is interesting [/_layouts/viewlsts.aspx](http://10.10.10.59//_layouts/viewlsts.aspx) :
 
-![](web_sharepoint_enum_site_content.png)
+![](assets/web_sharepoint_enum_site_content.png)
 
 The "Documents" part contain a file "ftp-details.docx" has been modified by `tally\administrator`. This strongly suggest the host name: `tally`.
 
@@ -359,11 +359,11 @@ But there is no significant change at this point.
 
 Exploring again from [/_layouts/viewlsts.aspx](http://tally//_layouts/viewlsts.aspx) with its hostname, the "Site Pages" now show up its content :
 
-![](web_sharepoint_enum_site_pages.png)
+![](assets/web_sharepoint_enum_site_pages.png)
 
 We can also display the page "Finance Team" :
 
-![](web_sharepoint_enum_migration_note.png)
+![](assets/web_sharepoint_enum_migration_note.png)
 
 ```text
 Migration update

