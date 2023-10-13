@@ -59,7 +59,7 @@ But nothing except that most pages will give a 301 HTTP code. So let's to see it
 
 http://cozyhosting.htb/test
 
-![[whitelabel.png]]
+![](assets/whitelabel.png)
 
 This is a typical spring-boot error page : [https://zetcode.com/springboot/whitelabelerror/](https://zetcode.com/springboot/whitelabelerror/)
 
@@ -97,25 +97,25 @@ We can also get some mapping/routing informations to give possible pages :
 
 There is a /admin page, redirecting to a login page :
 
-![[login.png]]
+![](assets/login.png)
 
 We can notice the cookie value :
 
-![[cookie.png]]
+![[assets/cookie.png]]
 
 The cookie value is the one given from the sessions actuator !
 
 From the web browser, we can alter the cookie value :
 
-![[cooky_update.png]]
+![[assets/cooky_update.png]]
 
 and change it for the "kanderson" session. With this change, we are now able to enter the admin portal at : http://cozyhosting.htb/admin
 
-![[kanderson.png]]
+![[assets/kanderson.png]]
 
 There is a form at the end of the page :
 
-![[form.png]]
+![[assets/form.png]]
 
 The note :
 
@@ -132,7 +132,7 @@ We can test this form, and we can notice an error condition :
 
 in burpsuite :
 
-![[error.png]]
+![[assets/error.png]]
 
 So this form is used to call ssh system command, and there is a sanitation issue we could use.
 
@@ -349,7 +349,7 @@ Credential found :
 
 We can go further and decompile this java application using `jd-gui`:
 
-![[source.png]]
+![[assets/source.png]]
 
 ```java
 package BOOT-INF.classes.htb.cloudhosting.scheduled;
