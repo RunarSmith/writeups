@@ -151,8 +151,6 @@ Progress: 219838 / 220561 (99.67%)
 
 A jenkins instance is available at : [http://10.10.10.63:50000/askjeeves/](http://10.10.10.63:50000/askjeeves/)
 
-![](assets/jeeves-askjeeves.png)
-
 There is no authentication required, this instance of Jenkins is fully open.
 
 It's possible to create a job, but we will use the integrated script console to execute groovy :
