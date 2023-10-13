@@ -58,7 +58,7 @@ Let's browse to this web application :
 firefox http://$TARGET &
 ```
 
-![[Pasted image 20230814222227.png]]
+![](assets/keeper_submit_tickets.png)
 
 We have the hosname to use, so add it to our `/etc/hosts` :
 
@@ -68,7 +68,7 @@ echo "$TARGET    keeper.htb tickets.keeper.htb" >> /etc/hosts
 
 Then click on the link (http://tickets.keeper.htb/rt/) :
 
-![[Pasted image 20230814222354.png]]
+![](assets/tickets.png)
 
 This is Request Tracker (RT), from Best Practical Solutions, version 4.4.4 on a ubuntu host.
 
@@ -83,12 +83,13 @@ root/password
 
 Using this will open the application :
 
-![[Pasted image 20230814222710.png]]
+![](assets/dashboard.png)
 
 There is only 1 ticket :
 
-![[Pasted image 20230814222757.png]]
-![[Pasted image 20230814222814.png]]
+![](assets/history.png)
+
+![](assets/ticket_history.png)
 
 Description from **Enoch Root** :
 
@@ -106,22 +107,22 @@ Answer from **Lise Nørgaard** :
 
 As we have an admin account, we can find more information on users in the Admin section :
 
-![[Pasted image 20230814222942.png]]
+![](assets/admin_menu.png)
 
 Then: users -> select
 
 only 2 users :
 
-![[Pasted image 20230814223049.png]]
+![](assets/users.png)
 
 |                                                                         |               |                      |
 | ----------- | ------------- | -------------------- |
 |  lnorgaard | Lise Nørgaard | lnorgaard@keeper.htb |
 | root      | Enoch Root    | root@localhost       |
 
-![[Pasted image 20230814223120.png]]
+![](assets/inorgaard.png)
 
-![[Pasted image 20230814223149.png]]
+![](assets/root.png)
 
 Credentials :
 
@@ -238,11 +239,11 @@ keepassx ./passcodes.kdbx &
 
 After a few tries, we can unlock with lowercase : "rødgrød med fløde"
 
-![[Pasted image 20230814225508.png]]
+![](assets/keepass.png)
 
 only 2 interesting entries :
 
-![[Pasted image 20230814225535.png]]
+![](assets/keepass_keeper.png)
 
 In network:
 - Ticketing System
@@ -299,7 +300,7 @@ puttygen
 
 File --> Load private key
 
-![[Pasted image 20230814230056.png]]
+![](assets/rsa_key.png)
 
 Then Conversions -->Export openSSH key
 

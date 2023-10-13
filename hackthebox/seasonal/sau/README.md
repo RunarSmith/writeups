@@ -111,7 +111,7 @@ Network Distance: 2 hops
 
 This is a web application on this port 5555 :
 
-![[Pasted image 20230712184930.png]]
+![](assets/new_basket.png)
 
 ## Initial access
 

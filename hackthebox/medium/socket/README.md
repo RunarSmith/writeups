@@ -126,13 +126,13 @@ echo "$TARGET    qreader.htb" >> /etc/hosts
 firefox http://qreader.htb/ &
 ```
 
-![](qreader_web_1.png)
+![](assets/qreader_web_1.png)
 
-![](qreader_web_2.png)
+![](assets/qreader_web_2.png)
 
 When entering a text, it will generate a PNG image file, such as :
 
-![](qrcode.png)
+![](assets/qrcode.png)
 
 (Input text: "test me")
 
@@ -155,7 +155,7 @@ This is a websocket.
 
 From the web page, it is provided a client :
 
-![](qreader_web_client.png)
+![](assets/qreader_web_client.png)
 
 ```shell
 wget http://qreader.htb/download/linux -O linux

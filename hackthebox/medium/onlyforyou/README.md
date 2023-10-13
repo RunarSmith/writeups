@@ -95,7 +95,7 @@ echo "$TARGET    only4you.htb" >> /etc/hosts
 
 ### Web Service
 
-![[Pasted image 20230816222929.png]]
+![](assets/home.png)
 
 Enumerate sub domains on this web server (vhosts) :
 
@@ -129,13 +129,13 @@ So we have also http://beta.only4you.htb/ :
 echo "$TARGET    only4you.htb beta.only4you.htb" >> /etc/hosts
 ```
 
-![[Pasted image 20230816223248.png]]
+![](assets/beta.png)
 
 At the top right, we have 2 links to resize or convert images :
 
-![[Pasted image 20230816223342.png]]
+![](assets/image_resizer.png)
 
-![[Pasted image 20230816223355.png]]
+![](assets/image_converter.png)
 
 The button "Source" will download a zip file "Source.zip", so we can extract its content :
 
@@ -742,7 +742,7 @@ chmod +x ./chisel
 
 http://localhost:3000/
 
-![[Pasted image 20230901205401.png]]
+![](assets/gogs.png)
 
 http://localhost:8001/
 
@@ -750,15 +750,15 @@ redirect to a login page :
 
 http://localhost:8001/login
 
-![[Pasted image 20230901205458.png]]
+![](assets/only4you_login.png)
 
-We can guess a gredential to login :
+We can guess a credential to login :
 
 admin:admin
 
-![[Pasted image 20230901212859.png]]
+![](assets/dashboard.png)
 
-![[Pasted image 20230901213326.png]]
+![](assets/dashboard2.png)
 
 http://localhost:7474/
 
@@ -766,7 +766,7 @@ redirect to :
 
 http://localhost:7474/browser/
 
-![[Pasted image 20230901205533.png]]
+![](assets/settings.png)
 
 So the application on port port 8001 is using the Neo4j database on port 7687. This database have a web front on port 7474.
 
@@ -776,15 +776,15 @@ Since the web application is using the database, there could be an injection poi
 
 The side menu (buger button) offer only 3 pages :
 
-![[Pasted image 20230901220812.png]]
+![](assets/dashboard3.png)
 
 The Employee page is a form :
 
-![[Pasted image 20230901220850.png]]
+![](assets/employees.png)
 
 Whenb using this search form :
 
-![[Pasted image 20230901222234.png]]
+![](assets/request_post.png)
 
 From Hacktricks, there a query to get server version :
 
@@ -895,11 +895,11 @@ http://localhost:3000/
 
 Using john's credential, we can login :
 
-![[Pasted image 20230903212725.png]]
+![](assets/gogs_john.png)
 
 There is only a project called "Test" :
 
-![[Pasted image 20230903212928.png]]
+![](assets/gogs_john_test.png)
 
 We are able to insert a new file.
 
@@ -991,23 +991,23 @@ The archive "mytest-0.0.1.tar.gz" is build in dist directory.
 
 We can download this archive  in the target repository :
 
-![[Pasted image 20230904223842.png]]
+![](assets/gogs_john_test_commit.png)
 
 We can then commit this change.
 
-![[Pasted image 20230904223927.png]]
+![](assets/uploaded.png)
 
 We can notice the lock next to the repository name :
 
-![[Pasted image 20230904224005.png]]
+![](assets/project_lock.png)
 
 This indicate a private repository. We can turn it as public : settings, then uncheck "This repository is pravate"
 
-![[Pasted image 20230904224141.png]]
+![](assets/project_visibility.png)
 
 The repository is now publicly accessible :
 
-![[Pasted image 20230904224227.png]]
+![](assets/project_unlocked.png)
 
 Start a reverse shell listener :
 rlwrap nc -vnlp 9001

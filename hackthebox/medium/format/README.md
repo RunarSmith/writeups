@@ -156,7 +156,7 @@ Let's create a blog ! For this, we first need to register.
 
 We come to a dashboard :
 
-![Untitled](dashboard.png)
+![Untitled](assets/dashboard.png)
 
 We can create a new blog (let's call it **john**) :
 

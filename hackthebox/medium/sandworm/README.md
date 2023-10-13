@@ -112,19 +112,19 @@ We can view it with a web browser :
 firefox http://ssa.htb &
 ```
 
-![[Pasted image 20230811194307.png]]
+![](assets/ssa_home.png)
 
 At the bottom of pages, there is a note on the flask framework used on this web application :
 
-![[Pasted image 20230813145840.png]]
+![](assets/flask.png)
 
 On the contact page, it is possible to post an encrypted message :
 
-![[Pasted image 20230811222808.png]]
+![](assets/ssa_contact.png)
 
 The link to the guide https://ssa.htb/guide :
 
-![[Pasted image 20230811230245.png]]
+![](assets/ssa_pgp.png)
 
 It's possible to encrypt, decrypt, and verify signature.
 
@@ -187,7 +187,7 @@ FxEcPBaB0bhe5Fh7fQ811EMG1Q6Rq/mr8o8bUfHh
 
 There is also a notice at the bottom "Verifying signed messages" :
 
-![[Pasted image 20230811231157.png]]
+![](assets/ssa_pgp_verufying.png)
 
 Some resources heres for GPG :
 - https://www.gnupg.org/documentation/manuals/gnupg/OpenPGP-Key-Management.html#OpenPGP-Key-Management
@@ -241,7 +241,7 @@ gpg --export --armor $GPG_REAL_EMAIL
 
 When provided to https://ssa.htb/guide, the form validate the signature :
 
-![[Pasted image 20230813145705.png]]
+![](assets/ssa_signature_verif_exploit.png)
 
 The output message is pretty formatted with information, probably through a template.
 
