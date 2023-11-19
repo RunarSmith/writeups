@@ -7,7 +7,7 @@ This repository is a collection of CTF writeups
 The best-of-the-best references :
 
 - [The Hacker Reciepes](https://www.thehacker.recipes/)
-- [ired.team notes](https://www.ired.team/)
+- [Red Team notes](https://www.ired.team/)
 - [HackTricks](https://book.hacktricks.xyz/)
 - [Pentester's Promiscuous Notebook](https://ppn.snovvcrash.rocks/)
 - [Exploit Notes](https://exploit-notes.hdks.org/) : huge collection of cheatsheets
@@ -22,7 +22,7 @@ The best-of-the-best references :
 
 # Tools
 
-revshells
+- [Reverse Shell Generator](https://www.revshells.com/)
 
 ## Linux
 
