@@ -15,24 +15,10 @@ The best-of-the-best references :
 - [PayloadsAllTheThings](https://github.com/swisskyrepo/PayloadsAllTheThings): a huge collection of notes, tips, exploits, technics
 - [Orange Cyberdefense](https://github.com/Orange-Cyberdefense): 
 
-## Active Directory
+https://pentestmonkey.net/
 
-- [Orange Cyberdefense mindmaps](https://orange-cyberdefense.github.io/ocd-mindmaps/)
-- [The Hacker Reciepes](https://www.thehacker.recipes/) have good resources
 
-# Tools
+# Tools and repositories
 
-- [Reverse Shell Generator](https://www.revshells.com/)
+https://gitlab.com/kalilinux/packages
 
-## Linux
-
-- [GTFOBins](https://gtfobins.github.io/): curated list of Unix binaries that can be used to bypass local security restrictions in misconfigured systems
-
-## Windows
-
-- [LOLBAS](https://lolbas-project.github.io/): Living Off The Land Binaries, Scripts and Libraries
-- [Living Off The Land Drivers](https://www.loldrivers.io/): Living Off The Land Drivers is a curated list of Windows drivers used by adversaries to bypass security controls and carry out attacks. The project helps security professionals stay informed and mitigate potential threats.
-
-## Active Directory
-
-- [WADComs](https://wadcoms.github.io/): a curated list of offensive security tools and their respective commands, to be used against Windows/AD environments.
