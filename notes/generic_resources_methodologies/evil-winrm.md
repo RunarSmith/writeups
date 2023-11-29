@@ -1,0 +1,57 @@
+
+
+## Known issues
+
+### can't find gem evil-winrm (>= 0.a) with executable evil-winrm
+
+When calling evil-wintm, had exception :
+
+```
+Traceback (most recent call last):
+        2: from /usr/local/bin/evil-winrm:23:in `<main>'
+        1: from /usr/lib/ruby/vendor_ruby/rubygems.rb:300:in `activate_bin_path'
+/usr/lib/ruby/vendor_ruby/rubygems.rb:281:in `find_spec_for_exe': can't find gem evil-winrm (>= 0.a) with executable evil-winrm (Gem::GemNotFoundException)
+```
+
+*Solution*: try to re-install
+
+```shell
+gem install evil-winrm
+```
+
+### When re-installing: /usr/bin/mkdir: No such file or directory
+
+When installing :
+
+```shell
+gem install evil-winrm
+```
+
+got issue :
+
+```
+linking shared-object ffi_c.so
+
+current directory: /usr/local/rvm/gems/ruby-3.0.0/gems/ffi-1.15.5/ext/ffi_c
+make "DESTDIR=" install
+make: /usr/bin/mkdir: No such file or directory
+make: *** [Makefile:202: .sitearchdir.time] Error 127
+
+make install failed, exit code 2
+
+Gem files will remain installed in /usr/local/rvm/gems/ruby-3.0.0/gems/ffi-1.15.5 for inspection.
+Results logged to /usr/local/rvm/gems/ruby-3.0.0/extensions/x86_64-linux/3.0.0/ffi-1.15.5/gem_make.out
+```
+
+*Solution*: create a link for make the installer find mkdir
+
+```shell
+ln -sf /bin/mkdir /usr/bin/mkdir
+```
+
+Then re-execute :
+
+```shell
+gem install evil-winrm
+```
+
